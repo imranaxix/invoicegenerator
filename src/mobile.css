@@ -1,0 +1,30 @@
+/* Dashboard-only mobile rules. The shared invoice/export document is untouched. */
+html.native-android { background: #f7f8f5; }
+.native-android body {
+  padding-top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  padding-bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  padding-left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+  padding-right: var(--safe-area-inset-right, env(safe-area-inset-right, 0px));
+  overscroll-behavior-y: contain;
+}
+.native-android .sidebar {
+  top: var(--safe-area-inset-top, env(safe-area-inset-top, 0px));
+  bottom: var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  left: var(--safe-area-inset-left, env(safe-area-inset-left, 0px));
+}
+.native-android .toast { bottom: calc(20px + var(--safe-area-inset-bottom, env(safe-area-inset-bottom, 0px))); }
+@media (pointer: coarse), (max-width: 650px) {
+  .button, .icon-button, .text-button, .add-row, .help-link, .nav-item { min-height: 44px; }
+  .icon-button, .zoom-controls button, .tiny-button, .toast button { min-width: 44px; min-height: 44px; }
+  .zoom-controls { gap: 3px; }
+  .preview-toolbar { height: auto; min-height: 60px; flex-wrap: wrap; }
+  .field input, .field select { min-height: 46px; font-size: 16px; }
+  .editor-table { min-width: 470px; }
+  .editor-table input { min-height: 44px; font-size: 16px; }
+  .editor-table th:last-child { width: 100px; }
+  .rows-wrap { overscroll-behavior-x: contain; -webkit-overflow-scrolling: touch; }
+  .row-actions { gap: 0; }
+  .export-bar { flex-wrap: wrap; }
+  .export-bar .button { min-height: 44px; }
+  .editor-actions { flex-wrap: wrap; }
+}

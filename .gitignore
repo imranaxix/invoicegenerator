@@ -3,3 +3,11 @@ node_modules/
 dist/
 *.tsbuildinfo
 .DS_Store
+android/local.properties
+android/.gradle/
+android/.idea/
+android/**/build/
+*.jks
+*.keystore
+keystore.properties
+signing.properties
