@@ -45,6 +45,29 @@ Android Studio manages the Gradle wrapper and SDK downloads. No global Gradle in
 
 ## Generate a debug APK
 
+### Build on GitHub without installing Android tooling locally
+
+The manual **Android APK** workflow is in `.github/workflows/android-apk.yml`. Its Ubuntu runner configures Node 22, Temurin JDK 21, Android SDK Platform 36, and the build tools. It then runs `npm ci`, `npm test` (Vitest), `npm run build`, `npx cap sync android`, and the Gradle wrapper's `assembleDebug` task. It fails if the expected APK is missing or empty and uploads only the debug APK as **Invoice-Generator-Android-APK**, retained for 14 days.
+
+To publish this workflow from the repository root:
+
+```powershell
+git add .github/workflows/android-apk.yml package-lock.json ANDROID.md
+git commit -m "Add GitHub Actions Android APK build"
+git push origin main
+git ls-files .github/workflows
+```
+
+The file must reach the repository's default branch for its manual Run workflow button to appear. In [the repository's Actions tab](https://github.com/imranaxix/invoicegenerator/actions), select **Android APK → Run workflow → main → Run workflow**. Open the run, wait for success, and download **Invoice-Generator-Android-APK** from its **Artifacts** section. Extract the ZIP to get `app-debug.apk`, then copy it to your phone to install. No Android SDK or Java is needed on your Windows computer for this cloud build.
+
+`package-lock.json` is included because `npm ci` requires an npm lockfile. The existing pnpm lockfile remains in place for the current web/development workflow. Keep the npm lockfile synchronized with `package.json` when changing dependencies.
+
+These are debug APKs for personal testing, not signed Play Store releases. Fresh hosted runners may generate different development signing keys. If Android rejects an update due to a signature mismatch, export a JSON backup before uninstalling the old version, then restore it after installing the new APK.
+
+Adding and validating a workflow does not compile an APK. A successful GitHub Actions run is required to verify the native build; no successful hosted build is claimed by this implementation.
+
+### Build locally when Android tooling is installed
+
 ```powershell
 npm run android:apk
 ```
